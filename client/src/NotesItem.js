@@ -1,20 +1,31 @@
 import React, { Fragment, useState } from 'react'
 import axios from 'axios'
 
-const NotesItem = ({ id, edit, setEdit, title, text }) => {
+const NotesItem = ({ id, isComplete, setComplete, title, text }) => {
 
     const [titleEdit, setTitleEdit] = useState(title)
     const [textEdit, setTextEdit] = useState(text)
+    const [edit, setEdit] = useState(false)
 
     const handleChangeClass = (e) => {
-        e.preventDefault();
         setEdit(!edit)
-        if (edit) {
-            axios.put(`/notes/${id + 1}`, { title: titleEdit, text: textEdit })
+        try {
+            if (edit) {
+                axios.put(`/notes/${id}`, { title: titleEdit, text: textEdit })
+            }
+            setComplete(!isComplete)
+        } catch (error) {
+            console.error(error)
         }
+
     }
-    const handleDelete = (e) => {
-        e.preventDefault();
+    const handleDelete = async (e) => {
+        try {
+            await axios.delete(`/notes/${id}`)
+            setComplete(!isComplete)
+        } catch (error) {
+            console.error(error)
+        }
 
     }
     return (
@@ -22,11 +33,9 @@ const NotesItem = ({ id, edit, setEdit, title, text }) => {
 
             <li className="notes__list-item">
                 <button onClick={handleDelete} type="button" className="delete-note-btn btn">
-                    x
-      </button>
+                    Delete</button>
                 <button onClick={handleChangeClass} type="button" className="edit-note-btn btn">
-                    edit
-      </button>
+                    Edit</button>
 
                 <div className={edit ? 'edit' : 'view'}>
                     <div className="note__title">

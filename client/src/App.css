@@ -1,5 +1,6 @@
 body {
   color: #fff;
+  background: darkslategray;
 }
 
 a {
@@ -10,13 +11,26 @@ a {
 .notes__title {
   margin: 0;
   padding: 0;
-  color: #000;
+  color: #ffffff;
   margin-bottom: 10px;
   overflow: hidden;
 }
 
 .create-note {
-  color: #000;
+  color: #ffffff;
+}
+.create-note {
+  width: 150px;
+  padding: 5px;
+  background-color: #fc7d49;  
+  cursor: pointer;
+  border: 1px solid rgb(179, 121, 14);
+  border-radius: 15px;
+
+}
+.create-note:hover {
+  background-color: chocolate;
+  transition: background-color .5s linear;
 }
 
 .notes {
@@ -33,6 +47,7 @@ a {
   background-color: #252525;
   padding: 20px;
   margin-top: 20px;
+  border-radius: 40px;
 }
 
 .notes__list-item {
@@ -42,13 +57,13 @@ a {
 }
 
 .btn {
-  width: 50px;
-  height: 22px;
+  width: 120px;
+  height: 26px;
   border: none;
   background-color: #fc7d49;
   color: #fff;
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 10px;
 }
 
 .delete-note-btn {
@@ -59,7 +74,7 @@ a {
 
 .edit-note-btn {
   position: absolute;
-  right: 65px;
+  right: 182px;
   bottom: 10px;
 }
 
@@ -80,3 +95,56 @@ a {
 .edit .note__text .edit {
   display: block;
 }
+
+
+/*=================================*/
+
+.container {
+  text-align: center;
+}
+
+.btn-submit {
+  width: 150px;
+  padding: 5px;
+  background-color: lightgray;  
+  cursor: pointer;
+  border: none;
+  border-radius: 15px;
+}
+.btn-submit:hover {
+  background-color: rgb(6, 129, 27);
+  transition: background-color 0.3s linear;
+}
+
+  .add__note {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 300px;
+    height: 100%;
+    background-color: lightslategray;;
+    margin: 0 auto;
+    border-radius: 20px;
+    margin-top: 15px;
+  }
+
+  .add__note p {
+    margin: 0;
+    font-weight: bold;
+  }
+  .add__input {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin-bottom: 0px;
+  
+  }
+
+  .add__input input {
+    margin: 10px 0;
+    bottom: 0;
+    border-radius: 5px;
+  }
+
+
+
