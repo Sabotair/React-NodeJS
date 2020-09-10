@@ -38,8 +38,6 @@ router.post('/notes', (req, res) => {
 
 
 router.get('/notes/:id', (req, res) => {
-
-
   let note = obj.filter(item => item.id === +req.params.id)
   res.status(200).send(note)
 })

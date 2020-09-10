@@ -11,6 +11,8 @@ const AddNote = ({ isComplete, setComplete }) => {
         try {
             axios.post('/notes', { title: title, text: text })
             setComplete(!isComplete)
+            setTitle('')
+            setText('')
         } catch (error) {
             console.error(error)
         }
