@@ -1,53 +1,41 @@
 import React, { Fragment, useState } from 'react'
 import ModalWindow from './ModalWindow';
-import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { editNotes, deleteNotes, getNoteById } from '../store/api/actions';
 
-const NotesItem = ({ id, isComplete, setComplete, title, text }) => {
+
+
+const NotesItem = ({ id, title, text }) => {
 
     const [titleEdit, setTitleEdit] = useState(title)
     const [textEdit, setTextEdit] = useState(text)
     const [edit, setEdit] = useState(false)
-    const [content, setContent] = useState({})
     const [isData, setData] = useState(false)
 
-    const handleChangeClass = async (e) => {
+    const note = useSelector(state => state.api.note)
+    const dispatch = useDispatch()
+
+    const handleEditChange = async (e) => {
         setEdit(!edit)
-        try {
-            if (edit) {
-                await axios.put(`/notes/${id}`, { title: titleEdit, text: textEdit })
-            }
-            setComplete(!isComplete)
-        } catch (error) {
-            console.error(error)
+        if (edit) {
+            dispatch(editNotes(id, titleEdit, textEdit))
         }
-
     }
-    const handleDelete = async (e) => {
-        try {
-            await axios.delete(`/notes/${id}`)
-            setComplete(!isComplete)
-        } catch (error) {
-            console.error(error)
-        }
-
+    const handleDelete = (e) => {
+        dispatch(deleteNotes(id))
     }
     const handleModelWindow = async (e) => {
-        try {
-            const res = await axios.get(`/notes/${id}`)
-            setContent(res.data[0])
-            setData(!isData)
-        } catch (error) {
-            console.error(error);
-        }
-
+        dispatch(getNoteById(id))
+        setData(!isData)
     }
+
     return (
         <Fragment>
             <li className="notes__list-item" >
                 <button onClick={handleDelete} type="button" className="delete-note-btn btn">
                     Delete
                 </button>
-                <button onClick={handleChangeClass} type="button" className="edit-note-btn btn">
+                <button onClick={handleEditChange} type="button" className="edit-note-btn btn">
                     Edit
                 </button>
                 <button onClick={handleModelWindow} type="button" className="show-note-btn btn">
@@ -70,7 +58,7 @@ const NotesItem = ({ id, isComplete, setComplete, title, text }) => {
                     </div>
                 </div>
             </li>
-            {isData ? <ModalWindow content={content} setData={setData} /> : ''}
+            {isData ? <ModalWindow content={note} setData={setData} /> : ''}
         </Fragment>
     )
 }

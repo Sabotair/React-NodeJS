@@ -1,21 +1,18 @@
 import React, { Fragment, useState } from 'react'
-import './App.css'
-import axios from 'axios'
+import '../App.css'
+import { addNotes } from '../store/api/actions'
+import { useDispatch } from 'react-redux'
 
-const AddNote = ({ isComplete, setComplete }) => {
 
+const AddNote = () => {
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
+    const dispatch = useDispatch()
 
     const handlePostNotes = () => {
-        try {
-            axios.post('/notes', { title: title, text: text })
-            setComplete(!isComplete)
-            setTitle('')
-            setText('')
-        } catch (error) {
-            console.error(error)
-        }
+        dispatch(addNotes(title, text))
+        setTitle('')
+        setText('')
     }
 
     return (

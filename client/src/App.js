@@ -1,36 +1,26 @@
 import React, { useState, useEffect } from 'react';
+import NotesItem from './components/NotesItem';
+import AddNote from './components/AddNote';
+import { loadNotes } from './store/api/actions';
+import { connect } from 'react-redux';
 import './App.css';
-import axios from 'axios';
-import NotesItem from './NotesItem';
-import AddNote from './AddNote';
 
-const App = () => {
 
-  const [response, setResponse] = useState([])
+
+const App = ({ loadNotes, notes }) => {
+
   const [isComplete, setComplete] = useState(false)
   const [isAdd, setAdd] = useState(false)
 
 
-
-  const callApi = async () => {
-    try {
-      const res = await axios.get('/notes')
-      setResponse(Object.values(res.data))
-    } catch (error) {
-      console.error(error)
-    }
-
-  }
-
   useEffect(() => {
-    callApi()
-  }, [isComplete])
+    loadNotes()
+  }, [loadNotes])
 
 
   const handleAddNote = () => {
     setAdd(!isAdd)
   }
-
   return (
 
     <div className="notes">
@@ -43,8 +33,8 @@ const App = () => {
       }
 
       <ul className="notes__list">
-        {response.map((item, index) => (
-          <NotesItem key={index} id={item.id} isComplete={isComplete} setComplete={setComplete} title={item.title} text={item.text} />
+        {notes.map((item, index) => (
+          <NotesItem key={index} id={item.id} title={item.title} text={item.text} />
         ))}
 
       </ul>
@@ -52,4 +42,13 @@ const App = () => {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    notes: state.api.notes
+  }
+}
+
+const mapDispatchToProps = {
+  loadNotes
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App)

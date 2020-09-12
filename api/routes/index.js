@@ -24,7 +24,7 @@ router.post('/notes', (req, res) => {
     res.send({ status: "error", message: "Title and text is requared" })
   } else {
     obj.push({
-      id: obj.length,
+      id: Date.now() - Math.random(),
       title: title,
       text: text
     })
