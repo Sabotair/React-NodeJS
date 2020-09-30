@@ -31,4 +31,4 @@ Install server dependencies:
 
 Start project (using yarn or npm):
 
-### `cd ../api npm start`
+### `cd ../api npm run start`
